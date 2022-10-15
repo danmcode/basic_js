@@ -14,13 +14,14 @@ let playerPoints = 0, puntosComputadora = 0;
 //Referencias del HTML
 const btnPedir = document.querySelector('#btnPedir');
 const smallTag = document.querySelector('small')
+const playerCardsDiv = document.querySelector('#jugador-cartas');
 
 /**
  * Esta función crea una nueva baraja
  */
 const createDeck = () => {
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 2; i < 10; i++) {
         deck.push( i + 'C');
         for (let cardType of cardsType) {
             deck.push(i + cardType);
@@ -63,8 +64,10 @@ const cardValue = ( card ) => {
     return (isNaN(value)) 
     ? (value === 'A') ? 11 : 10
     : value * 1;
+}
 
-} 
+//Computer Turn
+
 
 const value = cardValue(requestCard());
 
@@ -75,4 +78,18 @@ btnPedir.addEventListener('click',() => {
     playerPoints += cardValue( card );
     smallTag.innerText = playerPoints;
     
+    // <img class="carta" src="./assets/cartas/2C.png">
+    const imgCard = document.createElement('img');
+    imgCard.src = `./assets/cartas/${card}.png`;
+    imgCard.classList.add('carta')
+
+    playerCardsDiv.append( imgCard );
+
+    if( playerPoints > 21 ){
+        console.warn('Lo siento Mucho Perdiste');
+        btnPedir.disabled = true;
+    }else if( playerPoints === 21 ){
+        console.warn('21, Genial');
+        btnPedir.disabled = true;
+    }
 });
