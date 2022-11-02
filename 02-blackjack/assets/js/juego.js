@@ -9,12 +9,16 @@ let deck        = [];
 const cardsType = ['C', 'D', 'H', 'S'];
 const specials  = ['A', 'J', 'Q', 'K'];
 
-let playerPoints = 0, puntosComputadora = 0;
+let playerPoints = 0, computerPoints = 0;
 
 //Referencias del HTML
-const btnPedir = document.querySelector('#btnPedir');
-const smallTag = document.querySelector('small')
+    const btnPedir = document.querySelector('#btnPedir');
+const btnStop = document.querySelector('#btnDetener');
+const btnNewGame = document.querySelector('#btnNuevo');
+
+const smallTag = document.querySelectorAll('small')
 const playerCardsDiv = document.querySelector('#jugador-cartas');
+const computerCardsDiv = document.querySelector('#computadora-cartas');
 
 /**
  * Esta función crea una nueva baraja
@@ -67,7 +71,42 @@ const cardValue = ( card ) => {
 }
 
 //Computer Turn
+const computerTurn = ( minPoints ) => {
 
+    do {
+        const card = requestCard();
+
+        computerPoints += cardValue( card );
+        smallTag[1].innerText = computerPoints;
+        
+        // <img class="carta" src="./assets/cartas/2C.png">
+        const imgCard = document.createElement('img');
+        imgCard.src = `./assets/cartas/${card}.png`;
+        imgCard.classList.add('carta')
+    
+        computerCardsDiv.append( imgCard );
+
+        if (minPoints > 21) {
+            
+            break;
+        }
+
+    } while ( (computerPoints <= minPoints) && (computerPoints < minPoints));
+
+    setTimeout(() => {
+        if (computerPoints === minPoints ) {
+            alert('Nadie gana :(');
+        }else if(minPoints > 21){
+            alert('Computadora gana :(');
+        }else if( computerPoints > 21 ){
+            alert('Jugador gana :(');
+        }else{
+            alert('Computadora gana')
+        }
+    }, 10);
+
+
+}
 
 const value = cardValue(requestCard());
 
@@ -76,7 +115,7 @@ btnPedir.addEventListener('click',() => {
     const card = requestCard();
 
     playerPoints += cardValue( card );
-    smallTag.innerText = playerPoints;
+    smallTag[0].innerText = playerPoints;
     
     // <img class="carta" src="./assets/cartas/2C.png">
     const imgCard = document.createElement('img');
@@ -86,10 +125,26 @@ btnPedir.addEventListener('click',() => {
     playerCardsDiv.append( imgCard );
 
     if( playerPoints > 21 ){
+
         console.warn('Lo siento Mucho Perdiste');
+        computerTurn( playerPoints );
         btnPedir.disabled = true;
+        btnNewGame.disabled = true;
+        btnStop.disabled = true;
+
     }else if( playerPoints === 21 ){
+
         console.warn('21, Genial');
+        computerTurn( playerPoints );
         btnPedir.disabled = true;
+        btnNewGame.disabled = true;
+        btnStop.disabled = true;
+
     }
+});
+
+btnStop.addEventListener('click', ()=>{
+    // btnNewGame.disabled = true;
+    btnStop.disabled = true;
+    computerTurn( playerPoints );
 });
