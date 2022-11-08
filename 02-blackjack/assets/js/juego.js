@@ -5,6 +5,7 @@
 
 //Función anónima autoinvocada
 const myModule = (() => {
+    'use strict';
 
     let deck = [];
     const cardsType = ['C', 'D', 'H', 'S'];
