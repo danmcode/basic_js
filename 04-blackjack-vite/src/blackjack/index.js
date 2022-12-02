@@ -1,6 +1,4 @@
-import { crearDeck }  from './usecases/create-deck';
-import { pedirCarta } from './usecases/pedir-carta';
-import { valorCarta } from './usecases/valor-carta';
+import { crearDeck, pedirCarta, valorCarta, turnoComputadora} from './usecases'
 /**
  * 2C = Two of Clubs
  * 2D = Two of Diamonds
@@ -26,42 +24,6 @@ import { valorCarta } from './usecases/valor-carta';
  const puntosHTML = document.querySelectorAll('small');
   
  deck = crearDeck(tipos, especiales, deck);
- 
- // turno de la computadora
- const turnoComputadora = ( puntosMinimos ) => {
-    
-     do {
-         const carta = pedirCarta( deck );
- 
-         puntosComputadora = puntosComputadora + valorCarta( carta );
-         puntosHTML[1].innerText = puntosComputadora;
-         
-         // <img class="carta" src="assets/cartas/2C.png">
-         const imgCarta = document.createElement('img');
-         imgCarta.src = `assets/cartas/${ carta }.png`; //3H, JD
-         imgCarta.classList.add('carta');
-         divCartasComputadora.append( imgCarta );
- 
-         if( puntosMinimos > 21 ) {
-             break;
-         }
- 
-     } while(  (puntosComputadora < puntosMinimos)  && (puntosMinimos <= 21 ) );
- 
-     setTimeout(() => {
-         if( puntosComputadora === puntosMinimos ) {
-             alert('Nadie gana :(');
-         } else if ( puntosMinimos > 21 ) {
-             alert('Computadora gana')
-         } else if( puntosComputadora > 21 ) {
-             alert('Jugador Gana');
-         } else {
-             alert('Computadora Gana')
-         }
-     }, 100 );
- }
- 
- 
  
  // Eventos
  btnPedir.addEventListener('click', () => {
@@ -104,7 +66,7 @@ import { valorCarta } from './usecases/valor-carta';
  
      console.clear();
      deck = [];
-     deck = crearDeck();
+     deck = crearDeck( tipos, especiales );
  
      puntosJugador     = 0;
      puntosComputadora = 0;

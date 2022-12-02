@@ -1,7 +1,7 @@
 /**
  * Conocer el valor de una carta
  * @param {String} carta 
- * @returns {int}
+ * @returns {Number}
  */
 export const valorCarta = (carta) => {
 
