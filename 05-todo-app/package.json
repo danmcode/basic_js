@@ -1,5 +1,5 @@
 {
-  "name": "todo-app",
+  "name": "todo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^3.2.3"
+    "vite": "^4.4.5"
   },
   "dependencies": {
     "uuid": "^9.0.0"
