@@ -7,11 +7,17 @@ const state = {
 };
 
 const loadNextPage = async () =>{
-    await loadUsersByPage(state.currentPage + 1);
+    const users = await loadUsersByPage(state.currentPage + 1);
+    if( users.length === 0 ) return;
+    state.currentPage += 1;
+    state.users = users; 
 };
 
 const loadPreviousPage = async () =>{
-    throw new Error('No implementado');
+    const users = await loadUsersByPage(state.currentPage - 1);
+    if(state.currentPage === 1) return;
+    state.currentPage -= 1;
+    state.users = users; 
 };
 const onUserChange = async () =>{
     throw new Error('No implementado');
@@ -26,6 +32,6 @@ export default {
     onUserChange,
     reloadPage,
 
-    getUser : () => [...state.users],
+    getUsers : () => [...state.users],
     getCurrentPage: () => state.currentPage,
 }
